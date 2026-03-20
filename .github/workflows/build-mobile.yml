@@ -1,0 +1,38 @@
+name: Build Mobile (EAS)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/mobile/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - run: npm ci
+        working-directory: .
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build Android (preview)
+        run: eas build --platform android --profile preview --non-interactive
+
+      - name: Build iOS (preview)
+        if: github.event_name == 'workflow_dispatch'
+        run: eas build --platform ios --profile preview --non-interactive

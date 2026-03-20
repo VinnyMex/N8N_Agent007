@@ -1,0 +1,21 @@
+{
+  "name": "n8n-agent007",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "dev:web": "turbo dev --filter=web",
+    "dev:mobile": "turbo dev --filter=mobile",
+    "build:web": "turbo build --filter=web"
+  },
+  "packageManager": "npm@10.9.4",
+  "devDependencies": {
+    "turbo": "^2.3.0"
+  }
+}
