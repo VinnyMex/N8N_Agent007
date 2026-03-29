@@ -34,7 +34,10 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname === "/auth/callback";
   const isPublicPage =
     request.nextUrl.pathname === "/" ||
-    request.nextUrl.pathname.startsWith("/api/webhooks");
+    request.nextUrl.pathname.startsWith("/api/webhooks") ||
+    request.nextUrl.pathname.startsWith("/api/test") ||
+    request.nextUrl.pathname.startsWith("/api/health") ||
+    request.nextUrl.pathname.startsWith("/test-chat");
 
   if (!user && !isAuthPage && !isPublicPage) {
     const url = request.nextUrl.clone();

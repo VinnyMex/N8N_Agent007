@@ -1,5 +1,6 @@
 import { streamText } from "ai";
 import { anthropic } from "@ai-sdk/anthropic";
+import { createOpenAI } from "@ai-sdk/openai";
 import { AI_CONFIG } from "shared";
 import { N8nClient } from "@/lib/n8n-client";
 import { createN8nTools } from "./tools";
@@ -11,6 +12,18 @@ interface AgentInput {
   n8nApiKeyEncrypted: string;
 }
 
+function getModel() {
+  // Prefer OpenRouter if configured, fallback to Anthropic direct
+  if (process.env.OPENROUTER_API_KEY) {
+    const openrouter = createOpenAI({
+      baseURL: "https://openrouter.ai/api/v1",
+      apiKey: process.env.OPENROUTER_API_KEY,
+    });
+    return openrouter("anthropic/claude-sonnet-4");
+  }
+  return anthropic(AI_CONFIG.MODEL);
+}
+
 export function runAgent({ messages, n8nBaseUrlEncrypted, n8nApiKeyEncrypted }: AgentInput) {
   const baseUrl = decrypt(n8nBaseUrlEncrypted);
   const apiKey = decrypt(n8nApiKeyEncrypted);
@@ -18,7 +31,7 @@ export function runAgent({ messages, n8nBaseUrlEncrypted, n8nApiKeyEncrypted }: 
   const tools = createN8nTools(n8nClient);
 
   return streamText({
-    model: anthropic(AI_CONFIG.MODEL),
+    model: getModel(),
     system: AI_CONFIG.SYSTEM_PROMPT,
     messages,
     tools,
