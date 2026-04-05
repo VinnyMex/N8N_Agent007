@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "env": {
+    "OPENROUTER_API_KEY": "@openrouter_api_key",
+    "ENCRYPTION_KEY": "@encryption_key",
+    "N8N_BASE_URL": "@n8n_base_url",
+    "N8N_API_KEY": "@n8n_api_key",
+    "ANTHROPIC_API_KEY": "@anthropic_api_key",
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role",
+    "NEXT_PUBLIC_APP_URL": "@app_url"
+  }
+}

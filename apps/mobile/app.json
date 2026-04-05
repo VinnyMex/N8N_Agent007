@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Agent007",
+    "slug": "agent007",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "agent007",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "backgroundColor": "#6366f1"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.agent007.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#6366f1"
+      },
+      "package": "com.agent007.app"
+    },
+    "plugins": ["expo-router", "expo-secure-store", "expo-notifications"],
+    "extra": {
+      "eas": {
+        "projectId": "your-eas-project-id"
+      }
+    }
+  }
+}
