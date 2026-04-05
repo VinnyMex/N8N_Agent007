@@ -106,4 +106,45 @@ export class N8nClient {
       return false;
     }
   }
+
+  async createWorkflow(
+    workflow: {
+      name: string;
+      nodes?: Record<string, unknown>[];
+      connections?: Record<string, unknown>;
+      settings?: Record<string, unknown>;
+      tags?: { name: string }[];
+    }
+  ): Promise<N8nWorkflow> {
+    return this.request("/workflows", {
+      method: "POST",
+      body: JSON.stringify(workflow),
+    });
+  }
+
+  async updateWorkflow(
+    id: string,
+    workflow: {
+      name?: string;
+      nodes?: Record<string, unknown>[];
+      connections?: Record<string, unknown>;
+      settings?: Record<string, unknown>;
+      tags?: { name: string }[];
+    }
+  ): Promise<N8nWorkflow> {
+    return this.request(`/workflows/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(workflow),
+    });
+  }
+
+  async deleteWorkflow(id: string): Promise<void> {
+    await this.request(`/workflows/${id}`, {
+      method: "DELETE",
+    });
+  }
+
+  async getWorkflowFull(id: string): Promise<N8nWorkflow & { nodes?: Record<string, unknown>[]; connections?: Record<string, unknown>; settings?: Record<string, unknown> }> {
+    return this.request(`/workflows/${id}`);
+  }
 }

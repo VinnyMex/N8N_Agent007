@@ -159,5 +159,88 @@ export function createN8nTools(n8nClient: N8nClient) {
         };
       },
     }),
+
+    createWorkflow: tool({
+      description:
+        "Create a new workflow in n8n. Requires a name and optionally nodes, connections, and settings. Nodes should follow n8n workflow JSON format.",
+      parameters: z.object({
+        name: z.string().describe("Name of the new workflow"),
+        nodes: z
+          .array(z.record(z.unknown()))
+          .optional()
+          .describe("Array of workflow nodes in n8n JSON format"),
+        connections: z
+          .record(z.unknown())
+          .optional()
+          .describe("Connections between nodes in n8n format"),
+        settings: z
+          .record(z.unknown())
+          .optional()
+          .describe("Workflow settings (execution order, error handling, etc.)"),
+      }),
+      execute: async ({ name, nodes, connections, settings }) => {
+        const workflow = await n8nClient.createWorkflow({
+          name,
+          nodes,
+          connections,
+          settings,
+        });
+        return {
+          success: true,
+          id: workflow.id,
+          name: workflow.name,
+          message: `Workflow "${workflow.name}" created successfully with ID: ${workflow.id}`,
+        };
+      },
+    }),
+
+    updateWorkflow: tool({
+      description:
+        "Update an existing workflow's name, nodes, connections, or settings.",
+      parameters: z.object({
+        workflowId: z.string().describe("The workflow ID to update"),
+        name: z.string().optional().describe("New name for the workflow"),
+        nodes: z
+          .array(z.record(z.unknown()))
+          .optional()
+          .describe("Updated array of workflow nodes"),
+        connections: z
+          .record(z.unknown())
+          .optional()
+          .describe("Updated connections between nodes"),
+        settings: z
+          .record(z.unknown())
+          .optional()
+          .describe("Updated workflow settings"),
+      }),
+      execute: async ({ workflowId, name, nodes, connections, settings }) => {
+        const workflow = await n8nClient.updateWorkflow(workflowId, {
+          name,
+          nodes,
+          connections,
+          settings,
+        });
+        return {
+          success: true,
+          id: workflow.id,
+          name: workflow.name,
+          message: `Workflow "${workflow.name}" updated successfully.`,
+        };
+      },
+    }),
+
+    deleteWorkflow: tool({
+      description: "Delete a workflow permanently from n8n.",
+      parameters: z.object({
+        workflowId: z.string().describe("The workflow ID to delete"),
+      }),
+      execute: async ({ workflowId }) => {
+        await n8nClient.deleteWorkflow(workflowId);
+        return {
+          success: true,
+          message: `Workflow ${workflowId} deleted successfully.`,
+        };
+      },
+    }),
   };
 }
