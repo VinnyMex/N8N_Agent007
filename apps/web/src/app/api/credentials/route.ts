@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase/server";
 import { encrypt } from "@/lib/encryption";
-import { n8nCredentialSchema } from "shared";
+import { n8nCredentialSchema } from "@/lib/shared";
 import { N8nClient } from "@/lib/n8n-client";
 
 export async function POST(request: Request) {

@@ -1,4 +1,4 @@
-import type { N8nWorkflow, N8nExecution } from "shared";
+import type { N8nWorkflow, N8nExecution } from "@/lib/shared";
 
 export class N8nClient {
   private baseUrl: string;

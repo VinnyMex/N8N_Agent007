@@ -1,6 +1,6 @@
 import { createSupabaseServer } from "@/lib/supabase/server";
 import { runAgent } from "@/lib/ai/agent";
-import { chatMessageSchema } from "shared";
+import { chatMessageSchema } from "@/lib/shared";
 
 export async function POST(request: Request) {
   const supabase = await createSupabaseServer();

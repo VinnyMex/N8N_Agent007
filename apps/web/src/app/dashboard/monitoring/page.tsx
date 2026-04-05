@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase/client";
-import type { ExecutionLog } from "shared";
+import type { ExecutionLog } from "@/lib/shared";
 import { CheckCircle, XCircle, Clock, RefreshCw } from "lucide-react";
 
 const statusConfig = {

@@ -1,7 +1,7 @@
 import { streamText } from "ai";
 import { anthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
-import { AI_CONFIG } from "shared";
+import { AI_CONFIG } from "@/lib/shared";
 import { N8nClient } from "@/lib/n8n-client";
 import { createN8nTools } from "./tools";
 import { decrypt } from "@/lib/encryption";

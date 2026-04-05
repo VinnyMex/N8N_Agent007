@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { encrypt, decrypt } from "@/lib/encryption";
 import { streamText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
-import { AI_CONFIG } from "shared";
+import { AI_CONFIG } from "@/lib/shared";
 import { N8nClient } from "@/lib/n8n-client";
 import { createN8nTools } from "@/lib/ai/tools";
 
